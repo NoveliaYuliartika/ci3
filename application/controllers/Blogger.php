@@ -100,8 +100,12 @@ class Blogger extends CI_Controller {
 			$this->load->view('blogger/edit',$data);
 			$this->load->view('blogger/footer');
 		} else {
+			 $data['input'] = array(
+                 	'title' => $this->input->post('title'),
+                 	'artikel' => $this->input->post('artikel')
+                 );
 			//query Edit data
-			$this->Artikel->set_article($id);
+			$this->Artikel->set_article($id,$data['input']);
 			//kembali ke home
 			redirect('blogger');
 		}	
