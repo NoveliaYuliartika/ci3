@@ -18,6 +18,14 @@ class Artikel extends CI_Model {
           return $query->row_array();
      }
 
+     public function get_join(){
+          $query = $this->db->select('*')
+                    ->from('personal_blog')
+                    ->join('kategori','personal_blog.id_kategori = kategori.id_kategori')
+                    ->get();
+          return $query;
+     }
+
      public function set_article($id = 0, $data){
           $this->load->helper('url');
           //Membedakan untuk query create dan update

@@ -9,6 +9,7 @@ class Blogger extends CI_Controller {
 		parent::__construct();
 		//Load model dan helper
 		$this->load->model('Artikel');
+		$this->load->model('data_kategori');
 		$this->load->helper('url_helper');
 		$this->load->helper(array('form', 'url'));
 		date_default_timezone_set('Asia/Jakarta');
@@ -17,7 +18,7 @@ class Blogger extends CI_Controller {
 	public function index()
 	{
 		//Memanggil fungsi menampilkan semua tabel artikel
-		$data['artikel']=$this->Artikel->get_article();
+		$data['artikel']=$this->Artikel->get_join();
 		$this->load->view('blogger/header');
 		$this->load->view('blogger/tampil_blog', $data);
 		$this->load->view('blogger/footer');
@@ -40,7 +41,8 @@ class Blogger extends CI_Controller {
 	}
 
 	public function create(){
-		$config['upload_path'] = 'assets/img/';
+		$data['dropdown'] = $this->data_kategori->dropdown();
+		$config['upload_path'] = './image/';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
 		$this->load->library('upload', $config);
 
@@ -54,7 +56,7 @@ class Blogger extends CI_Controller {
 		if ($this->form_validation->run() == FALSE) {
 			//Meload View tambah artikel
 			$this->load->view('blogger/header');
-			$this->load->view('blogger/create');
+			$this->load->view('blogger/create',$data);
 			$this->load->view('blogger/footer');
 		} else {
 			if ( ! $this->upload->do_upload('gambar')){
@@ -67,6 +69,7 @@ class Blogger extends CI_Controller {
             	$data = array('upload_data' => $this->upload->data());
                  $data['input'] = array(
                  	'title' => $this->input->post('title'),
+                 	'id_kategori' => $this->input->post('kategori'),
                  	'artikel' => $this->input->post('artikel'),
                  	'gambar' => $this->upload->data('file_name'),
                  	'tanggal' => date("Y/m/d")
@@ -92,6 +95,7 @@ class Blogger extends CI_Controller {
 		//Mendapatkan key id dati Route
 		$id = $this->uri->segment(3);
 		//Mengambil data dari model dan di filter dan ditambahkan ke dalam array
+		$data['dropdown'] = $this->data_kategori->dropdown();
 		$data['show_article'] = $this->Artikel->get_article_by_id($id);
 		$data['id'] = $data['show_article']['id'];
 		$data['title'] = $data['show_article']['title'];
@@ -105,7 +109,8 @@ class Blogger extends CI_Controller {
 		} else {
 			 $data['input'] = array(
                  	'title' => $this->input->post('title'),
-                 	'artikel' => $this->input->post('artikel')
+                 	'artikel' => $this->input->post('artikel'),
+                 	'id_kategori' => $this->input->post('kategori')
                  );
 			//query Edit data
 			$this->Artikel->set_article($id,$data['input']);
@@ -118,6 +123,7 @@ class Blogger extends CI_Controller {
 		$this->Artikel->delete_article($id);
 		redirect('blogger','refresh');
 	}
+
 }
 
 /* End of file database_controller.php */
