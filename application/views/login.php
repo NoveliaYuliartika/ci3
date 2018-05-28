@@ -2,6 +2,10 @@
 <head>
 <title>My Private Website</title>
 </head>
+
+
+<link rel="stylesheet" href="<?php echo base_url()?>assets/css/bootstrap.min.css">
+
 <style type="text/css">
 	div.container{
 		width: 100%;
@@ -56,13 +60,21 @@
 	</marquee>
 	</header>
 
-<div style="background-color: #F08080;color: white;padding: 1px" align="center">
-	<h3><button type="submit" class="btn btn-default"><a href="home">Home</a></button><br><br>
-  	<button type="submit" class="btn btn-default"><a href="about">About Me</a></button><br><br>
-  	<button type="submit" class="btn btn-default"><a href="blog">My Blog</a></button><br><br>
-    <button type="submit" class="btn btn-default"><a href="<?php echo base_url('index.php/Login/logout')?>">Logout</a></button></h3>
+	<?php echo form_open('Login/ceklogin')?>
+	<?php echo validation_errors();?>
+		<div class="form-group">
+			<label for="">Username</label>
+			<input type="text" class="form-control" id="username" name="username">
+			<label for="">Password</label>
+			<input type="text" class="form-control" id="password" name="password">
+
+		</div>
+		<button type="submit" class="btn btn-primary">Sign In</button>
+
 </div>
-</form>
+	
+	username = tika<br>
+	password = tika
 
 	<footer><img src="<?php echo base_url().'image/logo1.jpg'?>" width="30" height="30">
 	Copyright &copy; NoveliaYuliartika.com</footer>

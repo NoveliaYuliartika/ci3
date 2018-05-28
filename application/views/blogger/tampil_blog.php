@@ -41,7 +41,7 @@ foreach ($artikel->result_array() as $row)
 		}
 		echo "<td><a href='".site_url('blog')."'>Back</a></td>"; 
 ?>
-</tbody>
+<?php echo $links ?>
 </table>
 </div>
 </div>

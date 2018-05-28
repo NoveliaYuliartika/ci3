@@ -7,21 +7,60 @@ class Blogger extends CI_Controller {
 	{
 		//Membuat kelas parent agar bisa digunakan di semua fungsi
 		parent::__construct();
+		if($this->session->userdata('loggIn')){
+			$session_data=$this->session->userdata("loggIn");
+			$data['username']=$session_data['username'];
+		}else{
+			redirect('Login', 'refresh');
+		}
 		//Load model dan helper
 		$this->load->model('Artikel');
 		$this->load->model('data_kategori');
+		$this->load->model('Blog_model');
 		$this->load->helper('url_helper');
 		$this->load->helper(array('form', 'url'));
 		date_default_timezone_set('Asia/Jakarta');
 	}
-
+ 
 	public function index()
 	{
-		//Memanggil fungsi menampilkan semua tabel artikel
-		$data['artikel']=$this->Artikel->get_join();
-		$this->load->view('blogger/header');
+		// $Artikel['title'] = $this->Artikel->get_all_artikel();
+		$Artikel['title'] = $this->Blog_model->get_all_artikel();
+
+		$limit_per_page = 6;
+
+		// URI segment untuk mendeteksi "halaman ke berapa" dari URL
+		$start_index = ( $this->uri->segment(3) ) ? $this->uri->segment(3) : 0;
+
+		// Dapatkan jumlah data 
+		$total_records = $this->Blog_model->get_total();
+		
+		if ($total_records > 0) {
+			// Dapatkan data pada halaman yg dituju
+			$data["artikel"] = $this->Blog_model->get_all_artikel($limit_per_page, $start_index);
+			
+			// Konfigurasi pagination
+			$config['base_url'] = base_url() . 'Blog/index';
+			$config['total_rows'] = $total_records;
+			$config['per_page'] = $limit_per_page;
+			$config["uri_segment"] = 3;
+			
+			$this->pagination->initialize($config);
+				
+			// Buat link pagination
+			$data["links"] = $this->pagination->create_links();
+		}
+
+		$this->load->view("blogger/header");
+		// Passing data ke view
 		$this->load->view('blogger/tampil_blog', $data);
-		$this->load->view('blogger/footer');
+		$this->load->view("blogger/footer");
+	
+
+		//$this->load->view("templates/header");
+		// $this->load->view('blogger/tampil_blog', $data);
+		//$this->load->view("templates/footer");
+	
 	}
 
 	public function view(){
