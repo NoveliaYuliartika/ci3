@@ -32,6 +32,34 @@ class user extends CI_Model
 		$this->db->insert('user',$object);
 		
 	}
+
+	 public function loginn($username, $password){
+        // Validasi
+        $this->db->where('username', $username);
+        $this->db->where('password', $password);
+
+        $result = $this->db->get('login');
+
+
+        if($result->num_rows() == 1){
+            return $result->row(0)->id;
+        } else {
+            return false;
+        }
+    }
+
+    public function get_user_level($idUser) {
+        $this->db->select('level');
+        $this->db->where('id', $idUser); 
+
+        $result = $this->db->get('login');
+
+        if($result->num_rows() == 1){
+            return $result->row(0)->level;
+        } else {
+            return false;
+        }
+    } 
 	
 }
 ?>

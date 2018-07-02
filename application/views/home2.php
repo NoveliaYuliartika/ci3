@@ -2,10 +2,6 @@
 <head>
 <title>My Private Website</title>
 </head>
-
-
-<link rel="stylesheet" href="<?php echo base_url()?>assets/css/bootstrap.min.css">
-
 <style type="text/css">
 	div.container{
 		width: 100%;
@@ -14,7 +10,7 @@
 
 	header, footer{
 		color:white;
-		background:blue;
+		background:green;
 		clear:left;
 		padding:1cm;
 		text-align: center;
@@ -56,31 +52,20 @@
 			<header>
 		<img src="<?php echo base_url().'image/logo1.jpg'?>" width="70" height="70">
 	<marquee>
-		<h1>WELCOME<span style="color:red"> IN </span><br><span style="color: yellow"> MY PRIVATE</span> <span style="color: black">WEBSITE</span></h1>
+		<h1>WELCOME<span style="color:yellow"> YULIARTIKA </span><br><span style="color: yellow"> </span> as <span style="color: white">USER2</span></h1>
 	</marquee>
 	</header>
 
-	<?php echo form_open('Login/ceklogin')?>
-	<?php echo validation_errors();?>
-		<div class="form-group">
-			<label for="">Username</label>
-			<input type="text" class="form-control" id="username" name="username">
-			<label for="">Password</label>
-			<input type="text" class="form-control" id="password" name="password">
-
-		</div>
-		<button type="submit" class="btn btn-primary">Sign In</button>
-
+<div style="background-color: #F08080;color: white;padding: 1px" align="center">
+	<h3><button type="submit" class="btn btn-default"><a href="home">Home</a></button><br><br>
+  	<button type="submit" class="btn btn-default"><a href="about">About Me</a></button><br><br>
+  	<button type="submit" class="btn btn-default"><a href="blog">My Blog</a></button><br><br>
+    <button type="submit" class="btn btn-default"><a href="<?php echo base_url('index.php/Login/logout')?>">Logout</a></button></h3>
 </div>
-	<b>ADMIN : </b><br>
-	username = tika, password = tika<br><br>
-	<b>USER1 : </b><br>
-	username = novelia, password = novelia<br><br>
-	<b>USER2 : </b><br>
-	username = yuliartika, password = yuliartika
+</form>
 
 	<footer><img src="<?php echo base_url().'image/logo1.jpg'?>" width="30" height="30">
-	Copyright &copy; NoveliaYuliartika.com</footer>
+	Copyright &copy; Yuliartika.com</footer>
 		</div>
 	</div>
 	

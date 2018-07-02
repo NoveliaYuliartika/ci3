@@ -7,6 +7,7 @@ Class Home extends CI_Controller{
 		parent::__construct();
 		if($this->session->userdata('loggIn')){
 			$session_data=$this->session->userdata("loggIn");
+			// $session_level=$this->session->userdata("level");
 			$data['username']=$session_data['username'];
 			$data['level']=$session_data['level'];
 		}else{
@@ -16,6 +17,12 @@ Class Home extends CI_Controller{
 
 	function index(){
 		$this->load->view('home');
+	}
+	function index2(){
+		$this->load->view('home1');
+	}
+	function index3(){
+		$this->load->view('home2');
 	}
 
 }
